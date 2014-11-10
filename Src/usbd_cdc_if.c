@@ -60,8 +60,8 @@
   /* USER CODE BEGIN 1 */
 /* Define size for the receive and transmit buffer over CDC */
 /* It's up to user to redefine and/or remove those define */
-#define APP_RX_DATA_SIZE  512
-#define APP_TX_DATA_SIZE  512
+#define APP_RX_DATA_SIZE  1//512
+#define APP_TX_DATA_SIZE  1//512
   /* USER CODE END 1 */  
 /**
   * @}
@@ -239,6 +239,8 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 7 */ 
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
+	USBD_CDC_ReceivePacket(hUsbDevice_0);
   return (USBD_OK);
   /* USER CODE END 7 */ 
 }
@@ -258,7 +260,7 @@ uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
 {
   uint8_t result = USBD_OK;
   /* USER CODE BEGIN 8 */ 
-  USBD_CDC_SetTxBuffer(hUsbDevice_0, /*UserTxBufferFS*/Buf, Len);   
+  USBD_CDC_SetTxBuffer(hUsbDevice_0, UserTxBufferFS, Len);   
   result = USBD_CDC_TransmitPacket(hUsbDevice_0);
   /* USER CODE END 8 */ 
   return result;
