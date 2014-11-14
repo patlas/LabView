@@ -1,4 +1,4 @@
---cpu Cortex-M4
+--cpu Cortex-M4.fp
 "rs232 configuration\startup_stm32f407xx.o"
 "rs232 configuration\gpio.o"
 "rs232 configuration\main.o"

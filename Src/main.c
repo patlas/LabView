@@ -47,6 +47,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void UpdatePWMPeriod(uint32_t val);
 
 int main(void)
 {
@@ -75,6 +76,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM1_Init();
   MX_USB_DEVICE_Init();
+	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 
   /* USER CODE BEGIN 2 */
 
@@ -132,6 +134,10 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void UpdatePWMPeriod(uint32_t val){
+	TIM1->CCR1 = val;
+}
 
 /* USER CODE END 4 */
 

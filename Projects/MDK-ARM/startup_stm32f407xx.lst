@@ -868,12 +868,13 @@ ARM Macro Assembler    Page 14
   438 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --cpu=Cortex-M4 --apcs=interwork --depend="rs232 c
-onfiguration\startup_stm32f407xx.d" -o"rs232 configuration\startup_stm32f407xx.
-o" -I..\..\Inc -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include --prede
-fine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="STM32F40_41xx
-x SETA 1" --list=startup_stm32f407xx.lst ..\..\Drivers\CMSIS\Device\ST\STM32F4x
-x\Source\Templates\arm\startup_stm32f407xx.s
+Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend="rs23
+2 configuration\startup_stm32f407xx.d" -o"rs232 configuration\startup_stm32f407
+xx.o" -I..\..\Inc -IC:\Users\PatLas\Documents\GitHub\RS232\Projects\MDK-ARM\RTE
+ -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include -IC:\Keil_v5\ARM
+\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --pr
+edefine="STM32F40_41xxx SETA 1" --list=startup_stm32f407xx.lst ..\..\Drivers\CM
+SIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
 
 
 
@@ -2285,4 +2286,4 @@ tes\arm\startup_stm32f407xx.s
 tes\arm\startup_stm32f407xx.s
 Comment: __main used once
 2 symbols
-443 symbols in table
+444 symbols in table

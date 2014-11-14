@@ -35,6 +35,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_cdc_if.h"
+#include "tim.h"
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
@@ -60,7 +61,7 @@
   /* USER CODE BEGIN 1 */
 /* Define size for the receive and transmit buffer over CDC */
 /* It's up to user to redefine and/or remove those define */
-#define APP_RX_DATA_SIZE  1//512
+#define APP_RX_DATA_SIZE  2//1//512
 #define APP_TX_DATA_SIZE  1//512
   /* USER CODE END 1 */  
 /**
@@ -238,7 +239,16 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
   */
 static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
 {
+	TIM_OC_InitTypeDef setting;
   /* USER CODE BEGIN 7 */ 
+	uint16_t value = 0;
+
+	value |= Buf[1];
+	value <<= 8;
+	value |= Buf[0];
+	
+	TIM1->CCR1 = value;
+
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
 	USBD_CDC_ReceivePacket(hUsbDevice_0);
   return (USBD_OK);
@@ -260,6 +270,9 @@ uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
 {
   uint8_t result = USBD_OK;
   /* USER CODE BEGIN 8 */ 
+	
+
+	
   USBD_CDC_SetTxBuffer(hUsbDevice_0, UserTxBufferFS, Len);   
   result = USBD_CDC_TransmitPacket(hUsbDevice_0);
   /* USER CODE END 8 */ 
