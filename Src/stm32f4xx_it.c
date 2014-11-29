@@ -39,7 +39,7 @@
 /* External variables --------------------------------------------------------*/
 
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
-
+extern TIM_HandleTypeDef htim7;
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
 /******************************************************************************/
@@ -52,6 +52,14 @@ void SysTick_Handler(void)
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
 }
+
+/* @brief This function handles TIM7 global interrupt.
+*/
+/*void TIM7_IRQHandler(void)
+{
+  HAL_NVIC_ClearPendingIRQ(TIM7_IRQn);
+  HAL_TIM_IRQHandler(&htim7);
+}*/
 
 /**
 * @brief This function handles USB On The Go FS global interrupt.

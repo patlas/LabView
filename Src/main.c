@@ -48,6 +48,22 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void UpdatePWMPeriod(uint32_t val);
+volatile char delay_pwm = 0;
+void TIM7_IRQHandler(void){
+	
+	GPIOD->ODR ^= 1UL<<15;
+	
+	//if(delay_pwm == 1)
+		//GPIOA->MODER |= (GPIO_MODE_AF_PP<<16);
+	//else
+		GPIOA->MODER ^= (GPIO_MODE_AF_PP<<16);
+	
+	delay_pwm ^= 1;
+	NVIC_ClearPendingIRQ(TIM7_IRQn);
+	HAL_TIM_IRQHandler(&htim7);
+	
+}
+
 
 int main(void)
 {
@@ -75,10 +91,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
+	MX_TIM7_Init();
   MX_USB_DEVICE_Init();
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 
   /* USER CODE BEGIN 2 */
+	
+	
 
   /* USER CODE END 2 */
 

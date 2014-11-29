@@ -61,7 +61,7 @@
   /* USER CODE BEGIN 1 */
 /* Define size for the receive and transmit buffer over CDC */
 /* It's up to user to redefine and/or remove those define */
-#define APP_RX_DATA_SIZE  2//1//512
+#define APP_RX_DATA_SIZE  4//2//1//512
 #define APP_TX_DATA_SIZE  1//512
   /* USER CODE END 1 */  
 /**
@@ -242,12 +242,29 @@ static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
 	TIM_OC_InitTypeDef setting;
   /* USER CODE BEGIN 7 */ 
 	uint16_t value = 0;
+	uint16_t freq = 0;
 
 	value |= Buf[1];
 	value <<= 8;
 	value |= Buf[0];
 	
 	TIM1->CCR1 = value;
+	
+	freq |= Buf[3];
+	freq <<= 8;
+	freq |= Buf[2];
+	
+	if(freq > 0){
+		TIM7->ARR = freq; //2000 => 1s interrupt
+	}
+	else{
+		TIM7->CR1 &= ~TIM_CR1_CEN;
+		NVIC_ClearPendingIRQ(TIM7_IRQn);
+		GPIOA->MODER |= (GPIO_MODE_AF_PP<<16);
+		//wlaczyc pin na pwm
+	}
+		
+	
 
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
 	USBD_CDC_ReceivePacket(hUsbDevice_0);
