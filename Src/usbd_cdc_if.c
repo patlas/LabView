@@ -256,6 +256,7 @@ static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
 	
 	if(freq > 0){
 		TIM7->ARR = freq; //2000 => 1s interrupt
+		TIM7->EGR |= 0x01;
 	}
 	else{
 		TIM7->CR1 &= ~TIM_CR1_CEN;
